@@ -8,12 +8,12 @@ export default createStore({
       todos: [
       ],
       donePomodoroNum: 0,
-      runTime: 3, //1500, 
-      breakTime: 3, //300,
+      runTime: 1500, 
+      breakTime: 300,
       todoIdx: 0,
       state: "stop",
       prevState: undefined,
-      alarmSound: 'digital.mp3', //undefined,
+      alarmSound: undefined,
       lang: "ko"
     }
   },

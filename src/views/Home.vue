@@ -342,35 +342,12 @@ export default {
               )}${delim} (${weekName[today.getDay()]})`;
             },
             curPomodoroNumIndicator: () => {
-              let lang = this.$store.state.lang;
-              let ordinal_suffixs = this.lang.ordinalSuffixs;
-
-              function ordinal(num) {
-                if (lang == "en") {
-                  let ones = num % 10;
-                  let ones_and_tens = num % 100;
-
-                  let ordinal_suffix;
-                  if (ones == 1 && ones_and_tens != 11)
-                    ordinal_suffix = ordinal_suffixs[0];
-                  else if (ones == 2 && ones_and_tens != 12)
-                    ordinal_suffix = ordinal_suffixs[1];
-                  else if (ones == 3 && ones_and_tens != 13)
-                    ordinal_suffix = ordinal_suffixs[2];
-                  else ordinal_suffix = suffix[3];
-
-                  return `${num}<sup>${ordinal_suffix}</sup>`;
-                } else if (lang == "ko") {
-                  return num + ordinal_suffixs[0];
-                }
-              }
+              let num = this.donePomodoroNum;
 
               let state = this.state;
               if (state == "pause") state = this.prevState;
 
-              let num = this.donePomodoroNum;
               let suffix;
-              
               if (state == "run") {
                 suffix = this.lang.curPomodoroNumIndicatorSuffixForRun;
                 num = num + 1;
@@ -383,7 +360,29 @@ export default {
                 suffix = this.lang.curPomodoroNumIndicatorSuffixForBreak;
               }
 
-              return `${ordinal(num)} ${suffix}`;
+              let lang = this.$store.state.lang;
+              let ordinal_suffixs = this.lang.ordinalSuffixs;
+
+              let ordinal = "";
+              if (lang == "en") {
+                let ones = num % 10;
+                let ones_and_tens = num % 100;
+
+                let ordinal_suffix;
+                if (ones == 1 && ones_and_tens != 11)
+                  ordinal_suffix = ordinal_suffixs[0];
+                else if (ones == 2 && ones_and_tens != 12)
+                  ordinal_suffix = ordinal_suffixs[1];
+                else if (ones == 3 && ones_and_tens != 13)
+                  ordinal_suffix = ordinal_suffixs[2];
+                else ordinal_suffix = suffix[3];
+
+                ordinal = `${num}<sup>${ordinal_suffix}</sup>`;
+              } else if (lang == "ko") {
+                ordinal = num + ordinal_suffixs[0];
+              }
+
+              return `${ordinal} ${suffix}`;
             },
             pomodoroStateIndicator: () => {
               return {

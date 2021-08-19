@@ -16,7 +16,7 @@
         "thursday": "thu",
         "friday": "fri",
         "saturday": "sat",
-        "ordinalSuffix": [
+        "ordinalSuffixs": [
             "st",
             "nd",
             "rd",

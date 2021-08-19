@@ -164,17 +164,17 @@
               :fontSize="buttonSize"
               :label="lang.alarmSound_digital"
               :class="{
-                toggled: $store.state.alarmSound == 'digital.mp3',
+                toggled: sound_model == 'digital.mp3',
               }"
-              @click="$store.commit('setAlarmSound', 'digital.mp3')"
+              @click="sound_model = 'digital.mp3'"
             />
             <RButton
               :fontSize="buttonSize"
               :label="lang.alarmSound_noSound"
               :class="{
-                toggled: $store.state.alarmSound === undefined,
+                toggled: sound_model === undefined,
               }"
-              @click="$store.commit('setAlarmSound', undefined)"
+              @click="sound_model = undefined"
             />
           </div>
         </div>
@@ -185,17 +185,17 @@
               :fontSize="buttonSize"
               :label="lang.ko"
               :class="{
-                toggled: $store.state.lang == 'ko',
+                toggled: lang_model == 'ko',
               }"
-              @click="$store.commit('setLanguage', 'ko')"
+              @click="lang_model = 'ko'"
             />
             <RButton
               :fontSize="buttonSize"
               :label="lang.en"
               :class="{
-                toggled: $store.state.lang == 'en',
+                toggled: lang_model == 'en',
               }"
-              @click="$store.commit('setLanguage', 'en')"
+              @click="lang_model = 'en'"
             />
           </div>
         </div>
@@ -232,6 +232,8 @@ export default {
       breakTime_unit: "min",
       runTime_manual: false,
       breakTime_manual: false,
+      lang_model: undefined,
+      sound_model: undefined,
     };
   },
   props: {
@@ -284,6 +286,9 @@ export default {
       );
       this.$store.commit("setBreakTime", breakTime_in_sec);
 
+      this.$store.commit("setLanguage", this.lang_model);
+      this.$store.commit("setAlarmSound", this.sound_model);
+
       this.closePopup();
     },
     closePopup: function () {
@@ -318,6 +323,9 @@ export default {
       } else {
         this.breakTime_manual = true;
       }
+
+      this.lang_model = this.$store.state.lang;
+      this.sound_model = this.$store.state.alarmSound;
     },
   },
   components: {
