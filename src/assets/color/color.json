@@ -1,0 +1,15 @@
+{
+    "background": "#E3EFFE",
+    "element_background": "#E3EFFE",
+    "element_shadow_bright": "#ffffff90",
+    "element_shadow_dark": "#a5bac790",
+    "element_text": "#626a76",
+    "element_background_dark": "#aaaaaa",
+    "element_toggle_background": "#c4efff",
+    "element_highlight_text": "#ffffff",
+    "element_highlight_background": "#9CBFCC",
+    "element_disabled_text": "#bbbbbb",
+    "progress_run": "#CE3B89",
+    "progress_break": "#26A9EE",
+    "progress_pause": "#A9DA3D"
+}
