@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pomodoro/fonts/NotoSansKR-Medium.5f5f7d31.woff2"
   },
   {
-    "revision": "6ffabc47b7624ad33dc49aa3c83628d5",
+    "revision": "1b20bc09c11dc8b412d544da866110a2",
     "url": "/pomodoro/index.html"
   },
   {
