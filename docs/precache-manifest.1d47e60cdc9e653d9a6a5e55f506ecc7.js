@@ -24,7 +24,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pomodoro/js/chunk-vendors.c24009b9.js"
   },
   {
-    "revision": "0988a35dc5110fb78064e95b74152841",
+    "revision": "66c93dbe7ff1f3eb88c3e1cc15219581",
     "url": "/pomodoro/manifest.json"
   },
   {

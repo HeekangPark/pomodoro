@@ -30,17 +30,17 @@ module.exports = {
     manifestOptions: {
       icons: [
         {
-          src: "img/icons/icons-180.png",
+          src: "img/icons/icon-180.png",
           type: "image/png",
           sizes: "180x180"
         },
         {
-          src: "img/icons/icons-192.png",
+          src: "img/icons/icon-192.png",
           type: "image/png",
           sizes: "192x192"
         },
         {
-          src: "img/icons/icons-512.png",
+          src: "img/icons/icon-512.png",
           type: "image/png",
           sizes: "512x512"
         },
