@@ -1,23 +1,17 @@
 module.exports = {
   devServer: {
-    host: "172.26.0.1",
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000/api',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      }
-    }
+    //host: "172.26.0.1"
   },
   publicPath: '/pomodoro',
   outputDir: './docs',
   pwa: {
+    workboxPluginMode: "InjectManifest",
+    workboxOptions: {
+      swSrc: 'src/service-worker.js'
+    },
     name: 'Pomodoro',
     themeColor: "#E3EFFE",
     msTileColor: "#000000",
-    background_color: "#E3EFFE",
     appleMobileWebAppCapable: 'yes',
     appleMobileWebAppStatusBarStyle: 'black',
     iconPaths: {
@@ -67,6 +61,8 @@ module.exports = {
           purpose: "maskable"
         },
       ],
+      background_color: "#E3EFFE",
+      lang: "ko"
     }
   }
 }
