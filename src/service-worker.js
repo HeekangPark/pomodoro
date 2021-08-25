@@ -1,6 +1,6 @@
 self.addEventListener('fetch', event => {
-    let api_re = /^api\//;
-    if(api_re.test(event.request.url)) {
+    console.log(event.request.url);
+    if(event.request.url.startsWith("/api/")) {
         let url = event.request.url.replace(/^api\//, "");
         console.log(url);
     } else {
