@@ -1,6 +1,6 @@
 module.exports = {
   devServer: {
-    //host: "172.26.0.1"
+    host: "172.26.0.1"
   },
   publicPath: '/pomodoro',
   outputDir: './docs',
