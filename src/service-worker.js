@@ -6,7 +6,7 @@ self.addEventListener('fetch', event => {
     //let hash = url.hash;
     console.log(pathname);
     if(pathname.startsWith("/api")) {
-        pathname = event.request.url.replace(/^\/api/, "");
+        pathname = pathname.replace(/^\/api/, "");
         console.log(pathname);
     } else {
         event.respondWith(fetch(event.request));
