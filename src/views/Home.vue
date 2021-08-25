@@ -470,7 +470,8 @@ export default {
       };
     },
     countDown: function () {
-      fetch("/api/hello");
+      fetch("api/hello");
+      fetch("pomodoro/api/wow");
       this.timeout = setTimeout(() => {
         this.$store.commit("setTime", this.time - 1);
         this.countDown();
