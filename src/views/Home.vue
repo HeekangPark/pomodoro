@@ -85,7 +85,7 @@
       </div>
       <div
         class="skip-break"
-        v-if="state === 'break' || (state === 'pause' && prevState === 'break')"
+        v-if="state === 'break'"
       >
         <RButton
           :fontSize="buttonSize"
@@ -470,6 +470,7 @@ export default {
       };
     },
     countDown: function () {
+      fetch("/api/hello");
       this.timeout = setTimeout(() => {
         this.$store.commit("setTime", this.time - 1);
         this.countDown();
