@@ -49,9 +49,7 @@ self.addEventListener('fetch', event => {
 
         if (pathname.startsWith("/api")) {
             pathname = pathname.replace(/^\/api/, "");
-            if (pathname === "/timer") {
-                console.log("timer", event.request.url);
-                /*
+            if (pathname.startsWith("/timer")) {
                 let client = await clients.get(event.clientId);
                 console.log(client, event.request.url);
 
@@ -60,7 +58,7 @@ self.addEventListener('fetch', event => {
                     runCountDown(client);
                 } else if (pathname === "/stop") {
                     stopCountDown();
-                }*/
+                }
 
                 console.log("sending response!", event.request.url);
                 event.respondWith(new Response(new Blob(), { status: 200 }));
