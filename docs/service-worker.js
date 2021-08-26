@@ -65,7 +65,7 @@ self.addEventListener('fetch', event => {
             }
         }
 
-        event.waitUntil(processAPICall());
+        event.respondWith(processAPICall());
     } else {
         event.respondWith(
             caches.match(event.request).then((res) => {
