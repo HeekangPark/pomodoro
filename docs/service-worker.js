@@ -43,20 +43,17 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-    event.waitUntil(async function () {
-        let url = new URL(event.request.url);
-        let pathname = url.pathname.replace(/^\/pomodoro/, "");
-        //let search = url.search;
-        //let hash = url.hash;
+    let url = new URL(event.request.url);
+    let pathname = url.pathname.replace(/^\/pomodoro/, "");
 
-        if (pathname.startsWith("/api")) {
+    if (pathname.startsWith("/api")) {
+        event.waitUntil(async function () {
             pathname = pathname.replace(/^\/api/, "");
-            console.log(pathname);
             if (pathname.startsWith("/timer")) {
                 let client = await clients.get(event.clientId);
                 console.log(client, event.request.url);
 
-                pathname = pathname.replace(/^\/countdown/, "");
+                pathname = pathname.replace(/^\/timer/, "");
                 if (pathname === "/start") {
                     runCountDown(client);
                 } else if (pathname === "/stop") {
@@ -66,29 +63,29 @@ self.addEventListener('fetch', event => {
                 console.log("sending response!", event.request.url);
                 event.respondWith(new Response(new Blob(), { status: 200 }));
             }
-        } else {
-            event.respondWith(
-                caches.match(event.request).then((res) => {
-                    if (res) {
-                        console.log("from cache", event.request.url);
-                        return res;
-                    } else {
-                        console.log("fetching", event.request.url);
-                        return fetch(event.request).then((r) => {
-                            return caches.open("Pomodoro").then((cache) => {
-                                cache.put(event.request.url, r.clone());
-                                return r;
-                            });
-                        }).catch(() => {
-                            return caches.open("Pomodoro").then((cache) => {
-                                return cache.match(event.request);
-                            });
+        }());
+    } else {
+        event.respondWith(
+            caches.match(event.request).then((res) => {
+                if (res) {
+                    console.log("from cache", event.request.url);
+                    return res;
+                } else {
+                    console.log("fetching", event.request.url);
+                    return fetch(event.request).then((r) => {
+                        return caches.open("Pomodoro").then((cache) => {
+                            cache.put(event.request.url, r.clone());
+                            return r;
                         });
-                    }
-                })
-            );
-        }
-    }());
+                    }).catch(() => {
+                        return caches.open("Pomodoro").then((cache) => {
+                            return cache.match(event.request);
+                        });
+                    });
+                }
+            })
+        );
+    }
 });
 
 
