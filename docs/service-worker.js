@@ -17,28 +17,30 @@ function stopCountDown() {
 }
 
 self.addEventListener('fetch', event => {
-    let url = new URL(event.request.url);
-    let pathname = url.pathname.replace(/^\/pomodoro/, "");
-    //let search = url.search;
-    //let hash = url.hash;
+    event.waitUntil(async function () {
+        let url = new URL(event.request.url);
+        let pathname = url.pathname.replace(/^\/pomodoro/, "");
+        //let search = url.search;
+        //let hash = url.hash;
 
-    if (pathname.startsWith("/api")) {
-        pathname = pathname.replace(/^\/api/, "");
-        if (pathname === "/timer") {
-            let client = await clients.get(event.clientId);
+        if (pathname.startsWith("/api")) {
+            pathname = pathname.replace(/^\/api/, "");
+            if (pathname === "/timer") {
+                let client = await clients.get(event.clientId);
 
-            pathname = pathname.replace(/^\/countdown/, "");
-            if (pathname === "/start") {
-                runCountDown(client);
-            } else if (pathname === "/stop") {
-                stopCountDown();
+                pathname = pathname.replace(/^\/countdown/, "");
+                if (pathname === "/start") {
+                    runCountDown(client);
+                } else if (pathname === "/stop") {
+                    stopCountDown();
+                }
+
+                event.respondWith(new Response(new Blob(), { status: 200 }));
             }
-
-            event.respondWith(new Response(new Blob(), {status: 200}));
+        } else {
+            event.respondWith(fetch(event.request));
         }
-    } else {
-        event.respondWith(fetch(event.request));
-    }
+    }());
 });
 
 
