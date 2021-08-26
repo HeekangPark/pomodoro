@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yarn build
-git add .
-git commit -m "$1"
-git push origin v1
+eval "$(conda shell.bash hook)"
+conda activate pomodoro
+
+python commit.py "$1"

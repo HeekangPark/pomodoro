@@ -201,19 +201,25 @@
         </div>
       </div>
       <div class="popup-footer">
-        <RButton
-          highlight
-          class="footer-item"
-          :fontSize="buttonSize"
-          :label="lang.apply"
-          @click="onApplyBtnClicked"
-        />
-        <RButton
-          class="footer-item"
-          :fontSize="buttonSize"
-          :label="lang.cancel"
-          @click="closePopup"
-        />
+        <p class="app-version"
+          :style="{color: (isShowAppVersion ? '#000000' : color.element_background)}"
+          @click="appVersionClicked"
+        >v{{ $store.state.appVersion }}</p>
+        <div class="btns">
+          <RButton
+            highlight
+            class="btn"
+            :fontSize="buttonSize"
+            :label="lang.apply"
+            @click="onApplyBtnClicked"
+          />
+          <RButton
+            class="btn"
+            :fontSize="buttonSize"
+            :label="lang.cancel"
+            @click="closePopup"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -234,6 +240,8 @@ export default {
       breakTime_manual: false,
       lang_model: undefined,
       sound_model: undefined,
+      isShowAppVersion: false,
+      appVersionTimeout: undefined
     };
   },
   props: {
@@ -346,6 +354,13 @@ export default {
         /*eslint-no-empty */
       }
     },
+    appVersionClicked: function() {
+      this.isShowAppVersion = true;
+      if(this.appVersionTimeout) clearTimeout(this.appVersionTimeout);
+      this.appVersionTimeout = setTimeout(() => {
+        this.isShowAppVersion = false;
+      }, 3000);
+    }
   },
   components: {
     RButton,
@@ -599,16 +614,33 @@ async function readAllDB(db) {
       z-index: 10;
       background: var(--element-background);
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: flex-end;
 
-      .footer-item {
-        margin: {
-          right: 1rem;
+      .app-version {
+        font-weight: 300;
+        cursor: pointer;
+        user-select: none;
+        padding: {
+          top: 0.25rem;
+          bottom: 0.25rem;
+          left: 0.5rem;
+          right: 0.5rem;
         }
+      }
 
-        &:last-child {
+      .btns {
+        display: flex;
+
+        .btn {
           margin: {
-            right: 0;
+            right: 1rem;
+          }
+
+          &:last-child {
+            margin: {
+              right: 0;
+            }
           }
         }
       }

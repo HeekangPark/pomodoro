@@ -159,9 +159,11 @@ export default {
   },
   created: function () {},
   mounted: function () {
-    navigator.serviceWorker.addEventListener("message", () => {
-      this.$store.commit("setTime", this.time - 1);
-    });
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", () => {
+        this.$store.commit("setTime", this.time - 1);
+      });
+    }
   },
   watch: {
     state: function (newState, oldState) {

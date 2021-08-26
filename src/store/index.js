@@ -1,3 +1,5 @@
+const VERSION = "1.3.0"
+
 import { createStore } from 'vuex'
 import lang from '@/assets/lang/lang.json'
 import color from '@/assets/color/color.json'
@@ -15,7 +17,8 @@ export default createStore({
       state: "stop",
       prevState: undefined,
       alarmSound: undefined,
-      lang: "ko"
+      lang: "ko",
+      appVersion: VERSION
     }
   },
   mutations: {

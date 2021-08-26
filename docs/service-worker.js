@@ -1,7 +1,10 @@
-importScripts("/pomodoro/precache-manifest.f155a2a1e263c2897d8656bd1883b326.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/pomodoro/precache-manifest.6fdcde6d43355b6be3d450acd6f90bcb.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+
+const VERSION = "1.3.0"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
 
 let timer;
 

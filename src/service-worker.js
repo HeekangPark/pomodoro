@@ -1,5 +1,8 @@
+const VERSION = "1.3.0"
+
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
 
 let timer;
 
