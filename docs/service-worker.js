@@ -1,7 +1,6 @@
 importScripts("/pomodoro/precache-manifest.e74ba3423955effa65358b493b988aa3.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 let timer;
