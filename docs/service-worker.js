@@ -23,7 +23,6 @@ function stopCountDown() {
 }
 
 self.addEventListener('install', event => {
-    console.log("Service worker Installing!");
     event.waitUntil(
         caches.open("Pomodoro").then(cache => {
             cache.addAll([
@@ -47,7 +46,7 @@ self.addEventListener('fetch', event => {
     let pathname = url.pathname.replace(/^\/pomodoro/, "");
 
     if (pathname.startsWith("/api")) {
-        event.waitUntil(async function () {
+        const processAPICall = async() => {
             pathname = pathname.replace(/^\/api/, "");
             if (pathname.startsWith("/timer")) {
                 let client = await clients.get(event.clientId);
@@ -61,9 +60,13 @@ self.addEventListener('fetch', event => {
                 }
 
                 console.log("sending response!", event.request.url);
-                event.respondWith(new Response(new Blob(), { status: 200 }));
+                return Promise.resolve();
+            } else {
+                return Prommise.reject();
             }
-        }());
+        }
+
+        event.waitUntil(processAPICall());
     } else {
         event.respondWith(
             caches.match(event.request).then((res) => {
