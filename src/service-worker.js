@@ -5,7 +5,6 @@ let timer;
 
 function runCountDown(client) {
     timer = setTimeout(() => {
-        console.log("sending msg");
         client.postMessage({
             tick: 1
         });
@@ -14,7 +13,6 @@ function runCountDown(client) {
 }
 
 function stopCountDown() {
-    console.log("in stopCountDown()");
     clearTimeout(timer);
     timer = undefined;
 }

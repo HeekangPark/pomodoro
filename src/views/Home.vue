@@ -159,7 +159,7 @@ export default {
   },
   created: function () {},
   mounted: function () {
-    navigator.serviceWorker.addEventListener("message", (event) => {
+    window.addEventListener("message", (event) => {
       console.log("ticked!", event.data.tick);
     });
   },
@@ -459,11 +459,9 @@ export default {
     },
     countDown: async function () {
       let result = await fetch("api/timer/start");
-      console.log(result);
     },
     resetTimer: async function () {
       let result = await fetch("api/timer/stop");
-      console.log(result);
     },
     onPlayOrPauseBtnClicked: function () {
       if (this.state == "run" || this.state == "break") {
