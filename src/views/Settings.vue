@@ -239,7 +239,8 @@ export default {
   props: {
     buttonSize: String,
   },
-  created: function () {
+  created: async function () {
+    await this.retrieveSettings();
     this.refresh();
   },
   computed: {
@@ -289,6 +290,8 @@ export default {
       this.$store.commit("setLanguage", this.lang_model);
       this.$store.commit("setAlarmSound", this.sound_model);
 
+      this.backupSettings();
+
       this.closePopup();
     },
     closePopup: function () {
@@ -327,11 +330,62 @@ export default {
       this.lang_model = this.$store.state.lang;
       this.sound_model = this.$store.state.alarmSound;
     },
+    retrieveSettings: async function () {
+      try {
+        let settings = await readAllDB(this.$db);
+        this.$store.commit("setSettings", settings);
+      } catch (err) {
+        /*eslint-no-empty */
+      }
+    },
+    backupSettings: async function () {
+      let settings = this.$store.getters.getSettings;
+      try {
+        await updateDB(this.$db, settings);
+      } catch (err) {
+        /*eslint-no-empty */
+      }
+    },
   },
   components: {
     RButton,
   },
 };
+
+async function updateDB(db, settings) {
+  return new Promise((resolve, reject) => {
+    if (db) {
+      let transaction = db.transaction(["Settings"], "readwrite");
+      let store = transaction.objectStore("Settings");
+      for (let key of Object.keys(settings)) {
+        store.put(settings[key], key);
+      }
+      transaction.oncomplete = () => resolve();
+    } else {
+      reject();
+    }
+  });
+}
+
+async function readAllDB(db) {
+  return new Promise((resolve, reject) => {
+    if (db) {
+      let transaction = db.transaction(["Settings"], "readonly");
+      let store = transaction.objectStore("Settings");
+      let result = {};
+      store.openCursor().onsuccess = (event) => {
+        let cursor = event.target.result;
+        if (cursor) {
+          result[cursor.key] = cursor.value;
+          cursor.continue();
+        }
+      };
+      transaction.oncomplete = () => resolve(result);
+    } else {
+      reject();
+    }
+  });
+}
 </script>
 
 <style lang="scss" scoped>

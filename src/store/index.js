@@ -5,10 +5,11 @@ import color from '@/assets/color/color.json'
 export default createStore({
   state() {
     return {
+      backup_keys: ["runTime", "breakTime", "alarmSound", "lang"],
       todos: [
       ],
       donePomodoroNum: 0,
-      runTime: 1500, 
+      runTime: 1500,
       breakTime: 300,
       todoIdx: 0,
       state: "stop",
@@ -18,7 +19,7 @@ export default createStore({
     }
   },
   mutations: {
-    setLanguage: function(state, lang) {
+    setLanguage: function (state, lang) {
       state.lang = lang;
     },
     setRunTime: function (state, time) {
@@ -109,8 +110,13 @@ export default createStore({
       state.todos = [];
       state.todoIdx = 0;
     },
-    setAlarmSound: function(state, alarmSound) {
+    setAlarmSound: function (state, alarmSound) {
       state.alarmSound = alarmSound;
+    },
+    setSettings: function (state, args) {
+      for (let key of Object.keys(args)) {
+        state[key] = args[key];
+      }
     }
   },
   getters: {
@@ -128,6 +134,13 @@ export default createStore({
       return state.todos.reduce(function (prev, cur) {
         return prev + cur.pomodoroNum;
       }, 0);
+    },
+    getSettings: function (state) {
+      let result = {};
+      for (let key of state.backup_keys) {
+        result[key] = state[key];
+      }
+      return result;
     }
   }
-})
+});

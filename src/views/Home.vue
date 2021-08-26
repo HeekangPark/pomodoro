@@ -83,10 +83,7 @@
           {{ displays().indicators().todoIndicator().progress() }}
         </p>
       </div>
-      <div
-        class="skip-break"
-        v-if="state === 'break'"
-      >
+      <div class="skip-break" v-if="state === 'break'">
         <RButton
           :fontSize="buttonSize"
           :label="displays().btns().skipBreakBtn().label()"
@@ -95,15 +92,9 @@
       </div>
     </div>
 
-    <Todolist 
-      :buttonSize="buttonSize"
-      v-model="showTodoList"
-    ></Todolist>
+    <Todolist :buttonSize="buttonSize" v-model="showTodoList"></Todolist>
 
-    <Settings
-      :buttonSize="buttonSize"
-      v-model="showSetting"
-    ></Settings>
+    <Settings :buttonSize="buttonSize" v-model="showSetting"></Settings>
   </div>
 </template>
 
@@ -132,7 +123,7 @@ export default {
     color: function () {
       return this.$store.getters.color;
     },
-    mode: function() {
+    mode: function () {
       return this.$store.getters.mode;
     },
     todos: function () {
@@ -153,45 +144,47 @@ export default {
     totalPomodoroNum: function () {
       return this.$store.getters.totalPomodoroNum;
     },
-    state: function() {
+    state: function () {
       return this.$store.state.state;
     },
-    prevState: function() {
+    prevState: function () {
       return this.$store.state.prevState;
     },
-    time: function() {
+    time: function () {
       return this.$store.state.time;
     },
-    alarmSound: function() {
+    alarmSound: function () {
       return this.$store.state.alarmSound;
-    }
+    },
   },
   created: function () {},
+  mounted: function () {
+    navigator.serviceWorker.addEventListener("message", (event) => {
+      console.log("ticked!", event.data.tick);
+    });
+  },
   watch: {
     state: function (newState, oldState) {
       switch (oldState) {
         case "run": {
           switch (newState) {
             case "break": {
-              this.playAlarmSound()
-              clearTimeout(this.timeout);
-              this.timeout = undefined;
+              this.playAlarmSound();
+              this.resetTimer();
               this.$store.commit("setTime", this.breakTime - 1);
               this.countDown();
               break;
             }
             case "pause": {
               this.blinkColon = true;
-              if(this.audio) this.audio.pause();
-              clearTimeout(this.timeout);
-              this.timeout = undefined;
+              if (this.audio) this.audio.pause();
+              this.resetTimer();
               break;
             }
             case "stop": {
               this.blinkColon = false;
-              if(this.audio) this.audio.pause();
-              clearTimeout(this.timeout);
-              this.timeout = undefined;
+              if (this.audio) this.audio.pause();
+              this.resetTimer();
               this.$store.commit("setTime", 0);
               break;
             }
@@ -201,25 +194,22 @@ export default {
         case "break": {
           switch (newState) {
             case "run": {
-              this.playAlarmSound()
-              clearTimeout(this.timeout);
-              this.timeout = undefined;
+              this.playAlarmSound();
+              this.resetTimer();
               this.$store.commit("setTime", this.runTime - 1);
               this.countDown();
               break;
             }
             case "pause": {
               this.blinkColon = false;
-              if(this.audio) this.audio.pause();
-              clearTimeout(this.timeout);
-              this.timeout = undefined;
+              if (this.audio) this.audio.pause();
+              this.resetTimer();
               break;
             }
             case "stop": {
               this.blinkColon = false;
-              if(this.audio) this.audio.pause();
-              clearTimeout(this.timeout);
-              this.timeout = undefined;
+              if (this.audio) this.audio.pause();
+              this.resetTimer();
               this.$store.commit("setTime", 0);
               break;
             }
@@ -267,13 +257,15 @@ export default {
             playOrPauseBtn: () => {
               return {
                 icon: () => {
-                  if (this.state == "run" || this.state == "break") return "pause";
+                  if (this.state == "run" || this.state == "break")
+                    return "pause";
                   else return "play"; //pause, stop
                 },
                 label: () => {
                   if (this.doNotShowBtnLabel) return undefined;
 
-                  if (this.state == "run" || this.state == "break") return this.lang.pauseBtnLabel;
+                  if (this.state == "run" || this.state == "break")
+                    return this.lang.pauseBtnLabel;
                   else return this.lang.playBtnLabel;
                 },
               };
@@ -351,12 +343,10 @@ export default {
               if (state == "run") {
                 suffix = this.lang.curPomodoroNumIndicatorSuffixForRun;
                 num = num + 1;
-              }
-              else if (state == "break") {
+              } else if (state == "break") {
                 suffix = this.lang.curPomodoroNumIndicatorSuffixForBreak;
-              }
-              else if (state == "stop") {
-                if(this.donePomodoroNum == 0) return "";
+              } else if (state == "stop") {
+                if (this.donePomodoroNum == 0) return "";
                 suffix = this.lang.curPomodoroNumIndicatorSuffixForBreak;
               }
 
@@ -394,18 +384,15 @@ export default {
                       break;
                     }
                     case "break": {
-                      percent =
-                        (this.breakTime - this.time) / this.breakTime;
+                      percent = (this.breakTime - this.time) / this.breakTime;
                       break;
                     }
                     case "pause": {
                       if (this.prevState == "run") {
-                        percent =
-                          (this.runTime - this.time) / this.runTime;
+                        percent = (this.runTime - this.time) / this.runTime;
                       } else {
                         //pause
-                        percent =
-                          (this.breakTime - this.time) / this.breakTime;
+                        percent = (this.breakTime - this.time) / this.breakTime;
                       }
                       break;
                     }
@@ -458,9 +445,10 @@ export default {
                   let todo = this.todos[this.todoIdx];
 
                   let state = this.state;
-                  if(state == "pause") state = this.prevState;
+                  if (state == "pause") state = this.prevState;
 
-                  if(state == "run") return `${todo.progress + 1} / ${todo.pomodoroNum}`;
+                  if (state == "run")
+                    return `${todo.progress + 1} / ${todo.pomodoroNum}`;
                   else return `${todo.progress} / ${todo.pomodoroNum}`;
                 },
               };
@@ -469,19 +457,23 @@ export default {
         },
       };
     },
-    countDown: function () {
-      fetch("api/hello");
-      this.timeout = setTimeout(() => {
-        this.$store.commit("setTime", this.time - 1);
-        this.countDown();
-      }, 1000);
+    countDown: async function () {
+      let result = await fetch("api/timer/start");
+      console.log(result);
+    },
+    resetTimer: function () {
+      let result = await fetch("api/timer/stop");
+      console.log(result);
     },
     onPlayOrPauseBtnClicked: function () {
-      if (this.state == "run" || this.state == "break") { // run -> pause, break -> pause
+      if (this.state == "run" || this.state == "break") {
+        // run -> pause, break -> pause
         this.$store.commit("setState", "pause");
-      } else if (this.state == "pause") { // pause -> prev(run or break)
+      } else if (this.state == "pause") {
+        // pause -> prev(run or break)
         this.$store.commit("setState", "prev");
-      } else { //stop -> run
+      } else {
+        //stop -> run
         this.$store.commit("setState", "run");
       }
     },
@@ -491,17 +483,17 @@ export default {
     onSkipBreakBtnClicked: function () {
       this.$store.commit("setTime", -1);
     },
-    playAlarmSound: function() {
-      if(!this.alarmSound) return;
-      if(this.audio) this.audio.pause();
+    playAlarmSound: function () {
+      if (!this.alarmSound) return;
+      if (this.audio) this.audio.pause();
       this.audio = new Audio(`sound/${this.alarmSound}`);
       this.audio.play();
-    }
+    },
   },
   components: {
     RButton,
     Settings,
-    Todolist
+    Todolist,
   },
 };
 </script>
