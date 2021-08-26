@@ -4,13 +4,12 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 let timer;
 
 function runCountDown(client) {
-    console.log("in runCountDown()");
     timer = setTimeout(() => {
         console.log("sending msg");
         client.postMessage({
             tick: 1
         });
-        runCountDown();
+        runCountDown(client);
     }, 1000);
 }
 
@@ -55,8 +54,6 @@ self.addEventListener('fetch', event => {
                 } else if (pathname === "/stop") {
                     stopCountDown();
                 }
-
-                console.log("sending response!", event.request.url);
                 return new Response(undefined, {status: 200});
             } else {
                 return new Response(undefined, {status: 404});
