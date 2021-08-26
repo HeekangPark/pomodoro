@@ -50,7 +50,16 @@ self.addEventListener('fetch', event => {
                         return res;
                     } else {
                         console.log("fetching");
-                        return fetch(event.request);
+                        return fetch(event.request).then((r) => {
+                            return caches.open("Pomodoro").then((cache) => {
+                                cache.put(event.request.url, r.clone());
+                                return r;
+                            });
+                        }).catch(() => {
+                            return caches.open("Pomodoro").then((cache) => {
+                                return cache.match(event.request);
+                            });
+                        });
                     }
                 })
             );
