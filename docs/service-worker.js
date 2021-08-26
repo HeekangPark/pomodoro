@@ -43,7 +43,6 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-    console.log("Fetching somthing!!", event.request.url);
     event.waitUntil(async function () {
         let url = new URL(event.request.url);
         let pathname = url.pathname.replace(/^\/pomodoro/, "");
@@ -53,27 +52,28 @@ self.addEventListener('fetch', event => {
         if (pathname.startsWith("/api")) {
             pathname = pathname.replace(/^\/api/, "");
             if (pathname === "/timer") {
+                /*
                 let client = await clients.get(event.clientId);
-                console.log(client);
+                console.log(client, event.request.url);
 
                 pathname = pathname.replace(/^\/countdown/, "");
                 if (pathname === "/start") {
                     runCountDown(client);
                 } else if (pathname === "/stop") {
                     stopCountDown();
-                }
+                }*/
 
-                console.log("sending response!");
+                console.log("sending response!", event.request.url);
                 event.respondWith(new Response(new Blob(), { status: 200 }));
             }
         } else {
             event.respondWith(
                 caches.match(event.request).then((res) => {
                     if (res) {
-                        console.log("from cache");
+                        console.log("from cache", event.request.url);
                         return res;
                     } else {
-                        console.log("fetching");
+                        console.log("fetching", event.request.url);
                         return fetch(event.request).then((r) => {
                             return caches.open("Pomodoro").then((cache) => {
                                 cache.put(event.request.url, r.clone());
