@@ -50,7 +50,6 @@ self.addEventListener('fetch', event => {
             pathname = pathname.replace(/^\/api/, "");
             if (pathname.startsWith("/timer")) {
                 let client = await clients.get(event.clientId);
-                console.log(client, event.request.url);
 
                 pathname = pathname.replace(/^\/timer/, "");
                 if (pathname === "/start") {
@@ -60,9 +59,9 @@ self.addEventListener('fetch', event => {
                 }
 
                 console.log("sending response!", event.request.url);
-                return Promise.resolve();
+                return Promise.resolve(new Response(new Blob(), {status: 200}));
             } else {
-                return Prommise.reject();
+                return Prommise.reject(new Response(new Blob(), {status: 404}));
             }
         }
 
