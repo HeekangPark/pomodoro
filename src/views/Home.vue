@@ -461,7 +461,7 @@ export default {
       let result = await fetch("api/timer/start");
       console.log(result);
     },
-    resetTimer: function () {
+    resetTimer: async function () {
       let result = await fetch("api/timer/stop");
       console.log(result);
     },
