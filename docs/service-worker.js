@@ -51,6 +51,7 @@ self.addEventListener('fetch', event => {
 
         if (pathname.startsWith("/api")) {
             pathname = pathname.replace(/^\/api/, "");
+            console.log(pathname);
             if (pathname.startsWith("/timer")) {
                 let client = await clients.get(event.clientId);
                 console.log(client, event.request.url);
