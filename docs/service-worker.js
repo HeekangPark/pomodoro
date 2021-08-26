@@ -3,6 +3,7 @@ importScripts("/pomodoro/precache-manifest.a61bd9109daed43995458588565d716e.js",
 let timer;
 
 function runCountDown(client) {
+    console.log("in runCountDown()");
     timer = setTimeout(() => {
         console.log("sending msg");
         client.postMessage({
@@ -13,6 +14,7 @@ function runCountDown(client) {
 }
 
 function stopCountDown() {
+    console.log("in stopCountDown()");
     clearTimeout(timer);
     timer = undefined;
 }
@@ -28,6 +30,7 @@ self.addEventListener('fetch', event => {
             pathname = pathname.replace(/^\/api/, "");
             if (pathname === "/timer") {
                 let client = await clients.get(event.clientId);
+                console.log(client);
 
                 pathname = pathname.replace(/^\/countdown/, "");
                 if (pathname === "/start") {
@@ -40,7 +43,6 @@ self.addEventListener('fetch', event => {
                 event.respondWith(new Response(new Blob(), { status: 200 }));
             }
         } else {
-            console.log("fetching", url);
             event.respondWith(fetch(event.request));
         }
     }());
