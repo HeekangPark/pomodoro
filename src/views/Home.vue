@@ -458,10 +458,10 @@ export default {
       };
     },
     countDown: async function () {
-      let result = await fetch("api/timer/start");
+      await fetch("api/timer/start");
     },
     resetTimer: async function () {
-      let result = await fetch("api/timer/stop");
+      await fetch("api/timer/stop");
     },
     onPlayOrPauseBtnClicked: function () {
       if (this.state == "run" || this.state == "break") {
