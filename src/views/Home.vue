@@ -159,7 +159,7 @@ export default {
   },
   created: function () {},
   mounted: function () {
-    window.addEventListener("message", (event) => {
+    navigator.serviceWorker.addEventListener("message", (event) => {
       console.log("ticked!", event.data.tick);
     });
   },
