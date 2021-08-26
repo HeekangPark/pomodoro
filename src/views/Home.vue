@@ -159,8 +159,8 @@ export default {
   },
   created: function () {},
   mounted: function () {
-    navigator.serviceWorker.addEventListener("message", (event) => {
-      console.log("ticked!", event.data.tick);
+    navigator.serviceWorker.addEventListener("message", () => {
+      this.$store.commit("setTime", this.time - 1);
     });
   },
   watch: {
