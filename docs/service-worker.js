@@ -43,7 +43,17 @@ self.addEventListener('fetch', event => {
                 event.respondWith(new Response(new Blob(), { status: 200 }));
             }
         } else {
-            event.respondWith(fetch(event.request));
+            event.respondWith(
+                caches.match(event.request).then((res) => {
+                    if (res) {
+                        console.log("from cache");
+                        return res;
+                    } else {
+                        console.log("fetching");
+                        return fetch(event.request);
+                    }
+                })
+            );
         }
     }());
 });
