@@ -4,6 +4,7 @@ let timer;
 
 function runCountDown(client) {
     timer = setTimeout(() => {
+        console.log("sending msg");
         client.postMessage({
             tick: 1
         });
@@ -35,9 +36,11 @@ self.addEventListener('fetch', event => {
                     stopCountDown();
                 }
 
+                console.log("sending response!");
                 event.respondWith(new Response(new Blob(), { status: 200 }));
             }
         } else {
+            console.log("fetching", url);
             event.respondWith(fetch(event.request));
         }
     }());
