@@ -17,7 +17,27 @@ function stopCountDown() {
     timer = undefined;
 }
 
+/*
+self.addEventListener('install', event => {
+    console.log("Service worker Installing!");
+    event.waitUntil(
+        caches.open("Pomodoro").then(cache => {
+            cache.addAll([
+                '/pomodoro',
+                '/js/app.js',
+                '/js/chunk-vendors.js',
+                '/js/about.js',
+                '/manifest.json',
+                '/img/logo.png',
+                '/img/icons/android-icon-144x144.png',
+                '/img/icons/android-icon-48x48.png'
+            ]);
+        })
+    )
+});*/
+
 self.addEventListener('fetch', event => {
+    console.log("Fetching somthing!!", event.request.url);
     event.waitUntil(async function () {
         let url = new URL(event.request.url);
         let pathname = url.pathname.replace(/^\/pomodoro/, "");
