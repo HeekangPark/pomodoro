@@ -59,9 +59,9 @@ self.addEventListener('fetch', event => {
                 }
 
                 console.log("sending response!", event.request.url);
-                return Promise.resolve(new Response(new Blob(), {status: 200}));
+                return new Response(undefined, {status: 200});
             } else {
-                return Prommise.reject(new Response(new Blob(), {status: 404}));
+                return new Response(undefined, {status: 404});
             }
         }
 
