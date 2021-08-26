@@ -8,6 +8,7 @@ module.exports = {
     workboxPluginMode: "InjectManifest",
     workboxOptions: {
       swSrc: 'src/service-worker.js',
+      include: ["*.png", "*.ico"]
     },
     name: 'Pomodoro',
     themeColor: "#E3EFFE",
