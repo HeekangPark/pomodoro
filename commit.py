@@ -18,6 +18,7 @@ if len(sys.argv) > 1:
         version[2] = 0
 
 version = f"{'.'.join([str(x) for x in version])}"
+print(f"commiting v{version}")
 
 with open("package.json", "w") as f:
     lines[2] = f'  "version": "{version}",\n'
