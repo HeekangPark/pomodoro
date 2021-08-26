@@ -22,24 +22,25 @@ function stopCountDown() {
     timer = undefined;
 }
 
-/*
 self.addEventListener('install', event => {
     console.log("Service worker Installing!");
     event.waitUntil(
         caches.open("Pomodoro").then(cache => {
             cache.addAll([
-                '/pomodoro',
-                '/js/app.js',
-                '/js/chunk-vendors.js',
-                '/js/about.js',
-                '/manifest.json',
-                '/img/logo.png',
-                '/img/icons/android-icon-144x144.png',
-                '/img/icons/android-icon-48x48.png'
+                '/pomodoro/img/icons/android-chrome-192x192.png',
+                '/pomodoro/img/icons/android-chrome-512x512.png',
+                '/pomodoro/img/icons/android-chrome-maskable-192x192.png',
+                '/pomodoro/img/icons/android-chrome-maskable-512x512.png',
+                '/pomodoro/img/icons/favicon-16.png',
+                '/pomodoro/img/icons/favicon-32.png',
+                '/pomodoro/img/icons/icon-180.png',
+                '/pomodoro/img/icons/icon-192.png',
+                '/pomodoro/img/icons/icon-512.png',
+                '/pomodoro/favicon.ico'
             ]);
         })
     )
-});*/
+});
 
 self.addEventListener('fetch', event => {
     console.log("Fetching somthing!!", event.request.url);
