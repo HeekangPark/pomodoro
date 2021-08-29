@@ -90,9 +90,6 @@
           @click="onSkipBreakBtnClicked"
         />
       </div>
-      <div class="debug">
-        <pre>{{ debug }}</pre>
-      </div>
     </div>
 
     <Todolist :buttonSize="buttonSize" v-model="showTodoList"></Todolist>
@@ -116,8 +113,7 @@ export default {
       showTodoList: false,
       showSetting: false,
       timeout: undefined,
-      audio: undefined,
-      debug: ""
+      audio: undefined
     };
   },
   computed: {
@@ -179,7 +175,7 @@ export default {
           switch (newState) {
             case "break": {
               this.playAlarmSound();
-              this.playAlarmVibration();
+              this.playAlarmVibration(newState);
               this.resetTimer();
               this.$store.commit("setTime", this.breakTime - 1);
               this.countDown();
@@ -205,7 +201,7 @@ export default {
           switch (newState) {
             case "run": {
               this.playAlarmSound();
-              this.playAlarmVibration();
+              this.playAlarmVibration(newState);
               this.resetTimer();
               this.$store.commit("setTime", this.runTime - 1);
               this.countDown();
@@ -498,11 +494,10 @@ export default {
       this.audio = new Audio(`sound/${this.alarmSound}`);
       this.audio.play();
     },
-    playAlarmVibration: function() {
+    playAlarmVibration: function(newState) {
       if(!this.alarmVibration) return;
-      let result1 = navigator.vibrate(0);
-      let result2 = navigator.vibrate(200);
-      this.debug = result1 + "\n" + result2 + "\n" + navigator.vibrate;
+      if(newState == "run") navigator.vibrate([300, 100, 300]);
+      else if (newState == "break") navigator.vibrate([300]);
     }
   },
   components: {
