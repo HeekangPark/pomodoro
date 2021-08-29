@@ -1,4 +1,4 @@
-const VERSION = "1.4.6"
+const VERSION = "1.4.7"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -59,9 +59,9 @@ self.addEventListener('fetch', event => {
             } else if (pathname.startsWith("/vibrate")) {
                 pathname = pathname.replace(/^\/vibrate/, "");
                 if (pathname === "/run") {
-                    window.navigator.activeVRDisplays([200, 100, 200]);
+                    window.navigator.vibrate([200, 100, 200]);
                 } else if (pathname === "/break") {
-                    window.navigator.activeVRDisplays([300]);
+                    window.navigator.vibrate([300]);
                 }
             } else {
                 return new Response(undefined, { status: 404 });
