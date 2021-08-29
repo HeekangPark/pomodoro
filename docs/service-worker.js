@@ -1,6 +1,6 @@
-importScripts("/pomodoro/precache-manifest.5352a970ea34070c3fa2a806ce5c629a.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/pomodoro/precache-manifest.1fa409bed777c3703a1aea9d50ec8778.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-const VERSION = "1.4.1"
+const VERSION = "1.4.2"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});

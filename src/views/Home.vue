@@ -156,6 +156,9 @@ export default {
     alarmSound: function () {
       return this.$store.state.alarmSound;
     },
+    alarmVibration: function () {
+      return this.$store.state.alarmVibration;
+    },
   },
   created: function () {},
   mounted: function () {
