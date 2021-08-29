@@ -500,7 +500,7 @@ export default {
     },
     playAlarmVibration: function() {
       if(!this.alarmVibration) return;
-      let result1 = navigator.vibrate();
+      let result1 = navigator.vibrate(0);
       let result2 = navigator.vibrate(200);
       this.debug = result1 + "\n" + result2 + "\n" + navigator.vibrate;
     }
