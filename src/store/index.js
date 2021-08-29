@@ -1,4 +1,4 @@
-const VERSION = "1.4.0"
+const VERSION = "1.4.1"
 
 import { createStore } from 'vuex'
 import lang from '@/assets/lang/lang.json'

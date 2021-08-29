@@ -493,8 +493,8 @@ export default {
     },
     playAlarmVibration: function() {
       if(!this.alarmVibration) return;
-      window.navigator.vibrate();
-      window.navigator.vibrate(200);
+      navigator.vibrate();
+      navigator.vibrate(200);
     }
   },
   components: {
