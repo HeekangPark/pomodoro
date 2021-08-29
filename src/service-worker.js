@@ -1,4 +1,4 @@
-const VERSION = "1.4.5"
+const VERSION = "1.4.6"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -44,7 +44,7 @@ self.addEventListener('fetch', event => {
     let pathname = url.pathname.replace(/^\/pomodoro/, "");
 
     if (pathname.startsWith("/api")) {
-        const processAPICall = async() => {
+        const processAPICall = async () => {
             pathname = pathname.replace(/^\/api/, "");
             if (pathname.startsWith("/timer")) {
                 let client = await clients.get(event.clientId);
@@ -55,9 +55,16 @@ self.addEventListener('fetch', event => {
                 } else if (pathname === "/stop") {
                     stopCountDown();
                 }
-                return new Response(undefined, {status: 200});
+                return new Response(undefined, { status: 200 });
+            } else if (pathname.startsWith("/vibrate")) {
+                pathname = pathname.replace(/^\/vibrate/, "");
+                if (pathname === "/run") {
+                    window.navigator.activeVRDisplays([200, 100, 200]);
+                } else if (pathname === "/break") {
+                    window.navigator.activeVRDisplays([300]);
+                }
             } else {
-                return new Response(undefined, {status: 404});
+                return new Response(undefined, { status: 404 });
             }
         }
 

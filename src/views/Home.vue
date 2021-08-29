@@ -494,10 +494,9 @@ export default {
       this.audio = new Audio(`sound/${this.alarmSound}`);
       this.audio.play();
     },
-    playAlarmVibration: function(newState) {
+    playAlarmVibration: async function(newState) {
       if(!this.alarmVibration) return;
-      if(newState == "run") navigator.vibrate([300, 100, 300]);
-      else if (newState == "break") navigator.vibrate([300]);
+      await fetch(`api/vibrate/${newState}`)
     }
   },
   components: {
