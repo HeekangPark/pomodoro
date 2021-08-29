@@ -1,4 +1,4 @@
-const VERSION = "1.3.1"
+const VERSION = "1.4.0"
 
 import { createStore } from 'vuex'
 import lang from '@/assets/lang/lang.json'
@@ -7,7 +7,7 @@ import color from '@/assets/color/color.json'
 export default createStore({
   state() {
     return {
-      backup_keys: ["runTime", "breakTime", "alarmSound", "lang"],
+      backup_keys: ["runTime", "breakTime", "alarmSound", "alarmVibration", "lang"],
       todos: [
       ],
       donePomodoroNum: 0,
@@ -17,6 +17,7 @@ export default createStore({
       state: "stop",
       prevState: undefined,
       alarmSound: undefined,
+      alarmVibration: false,
       lang: "ko",
       appVersion: VERSION
     }
@@ -115,6 +116,9 @@ export default createStore({
     },
     setAlarmSound: function (state, alarmSound) {
       state.alarmSound = alarmSound;
+    },
+    setAlarmVibration: function (state, alarmVibration) {
+      state.alarmVibration = alarmVibration;
     },
     setSettings: function (state, args) {
       for (let key of Object.keys(args)) {

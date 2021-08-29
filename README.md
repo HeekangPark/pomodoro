@@ -39,3 +39,7 @@ cache를 이용해 Offline 환경에서의 작동 구현
 ### v1.3
 
 service worker를 이용해 background에서의 작동 구현
+
+### v1.4
+
+진동 기능 구현

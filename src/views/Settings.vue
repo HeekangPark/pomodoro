@@ -64,7 +64,7 @@
                       ? color.element_toggle_background
                       : color.element_background
                   "
-                  @click="onSettingUnitBtnClicked('runTime', 'min')"
+                  @click="onTimeUnitBtnClicked('runTime', 'min')"
                 />
                 <RButton
                   :fontSize="buttonSize"
@@ -75,7 +75,7 @@
                       ? color.element_toggle_background
                       : color.element_background
                   "
-                  @click="onSettingUnitBtnClicked('runTime', 'sec')"
+                  @click="onTimeUnitBtnClicked('runTime', 'sec')"
                 />
               </div>
             </div>
@@ -140,7 +140,7 @@
                       ? color.element_toggle_background
                       : color.element_background
                   "
-                  @click="onSettingUnitBtnClicked('breakTime', 'min')"
+                  @click="onTimeUnitBtnClicked('breakTime', 'min')"
                 />
                 <RButton
                   :fontSize="buttonSize"
@@ -151,13 +151,13 @@
                       ? color.element_toggle_background
                       : color.element_background
                   "
-                  @click="onSettingUnitBtnClicked('breakTime', 'sec')"
+                  @click="onTimeUnitBtnClicked('breakTime', 'sec')"
                 />
               </div>
             </div>
           </div>
         </div>
-        <div class="setting-item sound-setting">
+        <div class="setting-item alarm-setting">
           <p class="setting-name">{{ lang.alarmSound }}</p>
           <div class="setting-content">
             <RButton
@@ -175,6 +175,27 @@
                 toggled: sound_model === undefined,
               }"
               @click="sound_model = undefined"
+            />
+          </div>
+        </div>
+        <div class="setting-item alarm-setting">
+          <p class="setting-name">{{ lang.alarmVibration }}</p>
+          <div class="setting-content">
+            <RButton
+              :fontSize="buttonSize"
+              :label="lang.alarmVibration_on"
+              :class="{
+                toggled: vibration_model == true,
+              }"
+              @click="vibration_model = true"
+            />
+            <RButton
+              :fontSize="buttonSize"
+              :label="lang.alarmVibration_off"
+              :class="{
+                toggled: vibration_model == false,
+              }"
+              @click="vibration_model = false"
             />
           </div>
         </div>
@@ -240,6 +261,7 @@ export default {
       breakTime_manual: false,
       lang_model: undefined,
       sound_model: undefined,
+      vibration_model: false,
       isShowAppVersion: false,
       appVersionTimeout: undefined
     };
@@ -277,7 +299,7 @@ export default {
     },
   },
   methods: {
-    onSettingUnitBtnClicked: function (target, value) {
+    onTimeUnitBtnClicked: function (target, value) {
       if (this[`${target}_manual`]) this[`${target}_unit`] = value;
     },
     onApplyBtnClicked: function () {
@@ -297,6 +319,7 @@ export default {
 
       this.$store.commit("setLanguage", this.lang_model);
       this.$store.commit("setAlarmSound", this.sound_model);
+      this.$store.commit("setAlarmVibration", this.vibration_model);
 
       this.backupSettings();
 
@@ -337,6 +360,7 @@ export default {
 
       this.lang_model = this.$store.state.lang;
       this.sound_model = this.$store.state.alarmSound;
+      this.vibration_model = this.$store.state.alarmVibration;
     },
     retrieveSettings: async function () {
       try {
@@ -578,7 +602,7 @@ async function readAllDB(db) {
           }
         }
 
-        &.sound-setting {
+        &.alarm-setting {
           .setting-content {
             margin: {
               left: -2rem;

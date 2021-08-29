@@ -172,6 +172,7 @@ export default {
           switch (newState) {
             case "break": {
               this.playAlarmSound();
+              this.playAlarmVibration();
               this.resetTimer();
               this.$store.commit("setTime", this.breakTime - 1);
               this.countDown();
@@ -197,6 +198,7 @@ export default {
           switch (newState) {
             case "run": {
               this.playAlarmSound();
+              this.playAlarmVibration();
               this.resetTimer();
               this.$store.commit("setTime", this.runTime - 1);
               this.countDown();
@@ -489,6 +491,11 @@ export default {
       this.audio = new Audio(`sound/${this.alarmSound}`);
       this.audio.play();
     },
+    playAlarmVibration: function() {
+      if(!this.alarmVibration) return;
+      window.navigator.vibrate();
+      window.navigator.vibrate(200);
+    }
   },
   components: {
     RButton,

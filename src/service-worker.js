@@ -1,4 +1,4 @@
-const VERSION = "1.3.1"
+const VERSION = "1.4.0"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
