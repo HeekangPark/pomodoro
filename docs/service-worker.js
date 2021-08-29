@@ -1,6 +1,6 @@
-importScripts("/pomodoro/precache-manifest.e58975b7faec3e6d0b979c11ec1e5a4a.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/pomodoro/precache-manifest.e4e2a62e1e571da15d03bdcd0c742144.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-const VERSION = "1.4.10"
+const VERSION = "1.4.11"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -61,17 +61,27 @@ self.addEventListener('fetch', event => {
             } else if (pathname.startsWith("/notification")) {
                 pathname = pathname.replace(/^\/notification/, "");
                 if (pathname === "/run") {
-                    //window.navigator.vibrate([200, 100, 200]);
-                    new Notification(`Pomodoro`, {
+                    let notification = new Notification(`Pomodoro`, {
                         body: "Break is over!",
                         icon: "img/icon-512.png"
-                    })
+                    });
+                    notification.onShow = () => {
+                        setTimeout(() => notification.close(), 5000);
+                    }
+                    notification.onerror = (error) => {
+                        console.error(error);
+                    }
                 } else if (pathname === "/break") {
-                    //window.navigator.vibrate([300]);
                     new Notification(`Pomodoro`, {
                         body: "Take some break!",
                         icon: "img/icon-512.png"
                     })
+                    notification.onShow = () => {
+                        setTimeout(() => notification.close(), 5000);
+                    }
+                    notification.onerror = (error) => {
+                        console.error(error);
+                    }
                 }
                 return new Response(undefined, { status: 200 });
             } else {
