@@ -176,6 +176,7 @@ export default {
             case "break": {
               this.playAlarmSound();
               this.playAlarmVibration(newState);
+              this.showNotification(newState);
               this.resetTimer();
               this.$store.commit("setTime", this.breakTime - 1);
               this.countDown();
@@ -202,6 +203,7 @@ export default {
             case "run": {
               this.playAlarmSound();
               this.playAlarmVibration(newState);
+              this.showNotification(newState);
               this.resetTimer();
               this.$store.commit("setTime", this.runTime - 1);
               this.countDown();
@@ -494,8 +496,13 @@ export default {
       this.audio = new Audio(`sound/${this.alarmSound}`);
       this.audio.play();
     },
-    playAlarmVibration: async function(newState) {
+    playAlarmVibration: function(newState) {
       if(!this.alarmVibration) return;
+      if(newState == "run") navigator.vibrate([300, 100, 300]);
+      else if (newState == "break") navigator.vibrate([300]);
+    },
+    showNotification: async function(newState) {
+      await fetch(`api/notification/${newState}`);
     }
   },
   components: {

@@ -1,6 +1,6 @@
-importScripts("/pomodoro/precache-manifest.f1412b971ffbb54b247794106e267ed2.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/pomodoro/precache-manifest.2572886b91178f950dcc4ba009d1fe7a.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-const VERSION = "1.4.8"
+const VERSION = "1.4.9"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -60,8 +60,8 @@ self.addEventListener('fetch', event => {
                     stopCountDown();
                 }
                 return new Response(undefined, { status: 200 });
-            } else if (pathname.startsWith("/vibrate")) {
-                pathname = pathname.replace(/^\/vibrate/, "");
+            } else if (pathname.startsWith("/notification")) {
+                pathname = pathname.replace(/^\/notification/, "");
                 if (pathname === "/run") {
                     //window.navigator.vibrate([200, 100, 200]);
                     new Notification(`Pomodoro`, {
