@@ -1,4 +1,4 @@
-const VERSION = "1.4.9"
+const VERSION = "1.4.10"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -19,8 +19,6 @@ function stopCountDown() {
     clearTimeout(timer);
     timer = undefined;
 }
-
-Notification.requestPermission();
 
 self.addEventListener('install', event => {
     event.waitUntil(

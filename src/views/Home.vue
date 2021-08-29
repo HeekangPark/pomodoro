@@ -113,7 +113,7 @@ export default {
       showTodoList: false,
       showSetting: false,
       timeout: undefined,
-      audio: undefined
+      audio: undefined,
     };
   },
   computed: {
@@ -166,6 +166,11 @@ export default {
       navigator.serviceWorker.addEventListener("message", () => {
         this.$store.commit("setTime", this.time - 1);
       });
+    }
+    if ("Notification" in window) {
+      if (Notification.permission != "granted") {
+        Notification.requestPermission();
+      }
     }
   },
   watch: {
@@ -496,14 +501,16 @@ export default {
       this.audio = new Audio(`sound/${this.alarmSound}`);
       this.audio.play();
     },
-    playAlarmVibration: function(newState) {
-      if(!this.alarmVibration) return;
-      if(newState == "run") navigator.vibrate([300, 100, 300]);
-      else if (newState == "break") navigator.vibrate([300]);
+    playAlarmVibration: function (newState) {
+      if (!this.alarmVibration) return;
+      if ("vibrate" in navigator) {
+        if (newState == "run") navigator.vibrate([300, 100, 300]);
+        else if (newState == "break") navigator.vibrate([300]);
+      }
     },
-    showNotification: async function(newState) {
+    showNotification: async function (newState) {
       await fetch(`api/notification/${newState}`);
-    }
+    },
   },
   components: {
     RButton,

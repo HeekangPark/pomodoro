@@ -1,6 +1,6 @@
-importScripts("/pomodoro/precache-manifest.2572886b91178f950dcc4ba009d1fe7a.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/pomodoro/precache-manifest.e58975b7faec3e6d0b979c11ec1e5a4a.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-const VERSION = "1.4.9"
+const VERSION = "1.4.10"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -21,8 +21,6 @@ function stopCountDown() {
     clearTimeout(timer);
     timer = undefined;
 }
-
-Notification.requestPermission();
 
 self.addEventListener('install', event => {
     event.waitUntil(
