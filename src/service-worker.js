@@ -1,4 +1,4 @@
-const VERSION = "1.4.7"
+const VERSION = "1.4.8"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -19,6 +19,8 @@ function stopCountDown() {
     clearTimeout(timer);
     timer = undefined;
 }
+
+Notification.requestPermission();
 
 self.addEventListener('install', event => {
     event.waitUntil(
@@ -59,10 +61,19 @@ self.addEventListener('fetch', event => {
             } else if (pathname.startsWith("/vibrate")) {
                 pathname = pathname.replace(/^\/vibrate/, "");
                 if (pathname === "/run") {
-                    window.navigator.vibrate([200, 100, 200]);
+                    //window.navigator.vibrate([200, 100, 200]);
+                    new Notification(`Pomodoro`, {
+                        body: "Break is over!",
+                        icon: "img/icon-512.png"
+                    })
                 } else if (pathname === "/break") {
-                    window.navigator.vibrate([300]);
+                    //window.navigator.vibrate([300]);
+                    new Notification(`Pomodoro`, {
+                        body: "Take some break!",
+                        icon: "img/icon-512.png"
+                    })
                 }
+                return new Response(undefined, { status: 200 });
             } else {
                 return new Response(undefined, { status: 404 });
             }

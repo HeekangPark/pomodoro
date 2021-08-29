@@ -496,7 +496,6 @@ export default {
     },
     playAlarmVibration: async function(newState) {
       if(!this.alarmVibration) return;
-      await fetch(`api/vibrate/${newState}`)
     }
   },
   components: {
