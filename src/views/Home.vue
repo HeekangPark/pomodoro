@@ -90,6 +90,9 @@
           @click="onSkipBreakBtnClicked"
         />
       </div>
+      <div class="debug">
+        <pre>{{ debug }}</pre>
+      </div>
     </div>
 
     <Todolist :buttonSize="buttonSize" v-model="showTodoList"></Todolist>
@@ -114,6 +117,7 @@ export default {
       showSetting: false,
       timeout: undefined,
       audio: undefined,
+      debug: ""
     };
   },
   computed: {
@@ -496,8 +500,9 @@ export default {
     },
     playAlarmVibration: function() {
       if(!this.alarmVibration) return;
-      navigator.vibrate();
-      navigator.vibrate(200);
+      let result1 = navigator.vibrate();
+      let result2 = navigator.vibrate(200);
+      this.debug = result1 + "\n" + result2 + "\n" + navigator.vibrate;
     }
   },
   components: {
