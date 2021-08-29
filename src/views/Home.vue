@@ -167,11 +167,6 @@ export default {
         this.$store.commit("setTime", this.time - 1);
       });
     }
-    if ("Notification" in window) {
-      if (Notification.permission != "granted") {
-        Notification.requestPermission();
-      }
-    }
   },
   watch: {
     state: function (newState, oldState) {
@@ -181,7 +176,6 @@ export default {
             case "break": {
               this.playAlarmSound();
               this.playAlarmVibration(newState);
-              this.showNotification(newState);
               this.resetTimer();
               this.$store.commit("setTime", this.breakTime - 1);
               this.countDown();
@@ -208,7 +202,6 @@ export default {
             case "run": {
               this.playAlarmSound();
               this.playAlarmVibration(newState);
-              this.showNotification(newState);
               this.resetTimer();
               this.$store.commit("setTime", this.runTime - 1);
               this.countDown();
@@ -507,10 +500,7 @@ export default {
         if (newState == "run") navigator.vibrate([300, 100, 300]);
         else if (newState == "break") navigator.vibrate([300]);
       }
-    },
-    showNotification: async function (newState) {
-      await fetch(`api/notification/${newState}`);
-    },
+    }
   },
   components: {
     RButton,

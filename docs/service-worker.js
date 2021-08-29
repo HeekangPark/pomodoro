@@ -1,6 +1,6 @@
-importScripts("/pomodoro/precache-manifest.d076e2b97c54108364fa09a7522817fb.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/pomodoro/precache-manifest.5a441389cf7dc96c750095c75092738a.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-const VERSION = "1.4.14"
+const VERSION = "1.4.15"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -56,21 +56,6 @@ self.addEventListener('fetch', event => {
                     runCountDown(client);
                 } else if (pathname === "/stop") {
                     stopCountDown();
-                }
-                return new Response(undefined, { status: 200 });
-            } else if (pathname.startsWith("/notification")) {
-                pathname = pathname.replace(/^\/notification/, "");
-                if (pathname === "/run") {
-                    /*    
-                    self.showNotification(`Pomodoro`, {
-                        body: "Break is over!",
-                        icon: "img/icon-512.png"
-                    });
-                } else if (pathname === "/break") {
-                    self.showNotification(`Pomodoro`, {
-                        body: "Take some break!",
-                        icon: "img/icon-512.png"
-                    });*/
                 }
                 return new Response(undefined, { status: 200 });
             } else {
