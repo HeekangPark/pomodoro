@@ -1,4 +1,4 @@
-const VERSION = "1.4.12"
+const VERSION = "1.4.13"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -59,12 +59,12 @@ self.addEventListener('fetch', event => {
             } else if (pathname.startsWith("/notification")) {
                 pathname = pathname.replace(/^\/notification/, "");
                 if (pathname === "/run") {
-                    ServiceWorkerRegistration.showNotification(`Pomodoro`, {
+                    self.showNotification(`Pomodoro`, {
                         body: "Break is over!",
                         icon: "img/icon-512.png"
                     });
                 } else if (pathname === "/break") {
-                    ServiceWorkerRegistration.showNotification(`Pomodoro`, {
+                    self.showNotification(`Pomodoro`, {
                         body: "Take some break!",
                         icon: "img/icon-512.png"
                     });
