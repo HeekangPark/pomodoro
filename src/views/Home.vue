@@ -372,7 +372,7 @@ export default {
                   ordinal_suffix = ordinal_suffixs[1];
                 else if (ones == 3 && ones_and_tens != 13)
                   ordinal_suffix = ordinal_suffixs[2];
-                else ordinal_suffix = suffix[3];
+                else ordinal_suffix = ordinal_suffixs[3];
 
                 ordinal = `${num}<sup>${ordinal_suffix}</sup>`;
               } else if (lang == "ko") {
