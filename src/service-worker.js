@@ -1,4 +1,4 @@
-const VERSION = "1.4.16"
+const VERSION = "1.4.17"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -11,6 +11,7 @@ function runCountDown(client) {
         client.postMessage({
             tick: 1
         });
+        console.log("Service Worker", "Tick sent");
         runCountDown(client);
     }, 1000);
 }

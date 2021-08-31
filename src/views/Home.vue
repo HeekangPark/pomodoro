@@ -164,6 +164,7 @@ export default {
   mounted: function () {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.addEventListener("message", () => {
+        console.log("Client", "Tick received");
         this.$store.commit("setTime", this.time - 1);
       });
     }

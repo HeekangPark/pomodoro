@@ -1,6 +1,6 @@
-importScripts("/pomodoro/precache-manifest.f251dd3cd921a6e12b36e0e4a62d707f.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/pomodoro/precache-manifest.96704d6597b58326fd6bd9c2e6ff459f.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-const VERSION = "1.4.16"
+const VERSION = "1.4.17"
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -13,6 +13,7 @@ function runCountDown(client) {
         client.postMessage({
             tick: 1
         });
+        console.log("Service Worker", "Tick sent");
         runCountDown(client);
     }, 1000);
 }
